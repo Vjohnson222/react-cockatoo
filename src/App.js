@@ -1,18 +1,35 @@
 import React from 'react';
 
-function App() {
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+let todoList =[
+  {
+   id: 1,
+    title: "Call your Mother",
+   },
+  {
+   id: 2,
+    title: "Water the plants",
+   },
+  {
+     id: 3,
+     title: "Find a Loft",
+   },
+   ];
+
+   function App() {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h1>Todo List</h1>
+        <ul>
+          {todoList.map(item =>
+            <li key={item.id}>
+              <li>{item.title}</li>
+            </li>
+            )}
+  
+        </ul>
+      </div>
+    );
+  }
+  
+  export default App;
