@@ -6,12 +6,13 @@ import TodoListItem from './TodoListItem';
 //Change todoList to reference props instead of the hard-coded variable
 
 //Next - update props to use destructuring
-const TodoList = ({ todoList }) => {
+
+const TodoList = ({ todoList, onRemoveTodo }) => {
 	return (
 		<div>
 			<ul>
 				{todoList.map((todo) => (
-					<TodoListItem key={todo.id} todo={todo} />
+					<TodoListItem key={todo.id} todo={todo} onRemoveTodo={onRemoveTodo} />
 				))}
 			</ul>
 		</div>
