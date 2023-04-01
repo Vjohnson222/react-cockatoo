@@ -1,69 +1,76 @@
-import React, { useEffect } from 'react';
-import AddTodoForm from './AddTodoForm';
-import TodoList from './TodoList';
+import React, { useEffect } from "react";
+import AddTodoForm from "./AddTodoForm";
+import TodoList from "./TodoList";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-	const [todoList, setTodoList] = React.useState([]);
-	const [isLoading, setIsLoading] = React.useState(true);
+  const [todoList, setTodoList] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  
+// According to the directions 
+  const baseId = process.env.REACT_APP_AIRTABLE_BASE_ID;
+const url = `https://api.airtable.com/v0/${baseId}/Default`;
 
-	useEffect(() => {
-		new Promise((resolve) =>
-			setTimeout(
-				() =>
-					resolve({
-						data: {
-							todoList: JSON.parse(localStorage.getItem('savedTodoList')),
-						},
-					}),
-				2000
-			)
-		).then((results) => {
-			setTodoList([...results.data.todoList]);
-			setIsLoading(false);
-		});
+fetch(url, {
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => {
+  // do something with the response data
+})
+.catch(error => {
+  // handle any errors
+});
 
-		// add an if statement to check that isLoading is false before setting localStorage
-		if (!isLoading) {
-			localStorage.setItem('savedTodoList', JSON.stringify(todoList));
-		}
-		
-		// Lesson 1-8 Inside the first useEffect hook, replace the placeholder Promise with the following...
-		fetch(
-			`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default?view=Grid%20view&sort[0][field]=Title&sort[0][direction]=asc`,
-			{
-			  method: "GET",
-			  headers: {
-				Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-			  },
-			}
-		  )
+  useEffect(() => {
+		fetch(url)
 			.then((response) => response.json())
-			.then((result) => {
-			  setTodoList([...result.records]);
-			  setIsLoading(false);
+			.then((data) => {
+				setTodoList(data.records);
+				setIsLoading(false);
 			});
-	}, []);
+	});
 
-	const addTodo = (newTodo) => {
-		setTodoList([...todoList, newTodo]);
-	};
+  useEffect(() => {
+    if (!isLoading) {
+      localStorage.setItem("savedTodoList", JSON.stringify(todoList));
+    }
+  }, [todoList, isLoading]);
 
-	const removeTodo = (id) => {
-		const removeNewToDo = todoList.filter((list) => list.id !== id);
-		setTodoList(removeNewToDo);
-	};
+  const addTodo = (newTodo) => {
+    setTodoList([...todoList, newTodo]);
+  };
 
-	return (
-		<div>
-			<h1>ToDo List</h1>
-			<AddTodoForm onAddTodo={addTodo} />
-			{isLoading ? (
-				<p>Loading </p>
-			) : (
-				<TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-			)}
-		</div>
-	);
+  const removeTodo = (id) => {
+    const removeNewToDo = todoList.filter((list) => list.id !== id);
+    setTodoList(removeNewToDo);
+  };
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <h1>Todo List</h1>
+              <AddTodoForm onAddTodo={addTodo} />
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+              )}
+            </div>
+          }
+        ></Route>
+        <Route path="/new" element={<h1>New Todo List</h1>}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

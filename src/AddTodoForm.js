@@ -41,9 +41,10 @@ const AddTodoForm = ({ onAddTodo }) => {
           handleTitleChange={handleTitleChange}
         >
 			{/* label prop to the InputWithLabel component with value "Title"  */}
-          <strong>Title:</strong>
+          <strong>My Title:</strong>
         </InputWithLabel>
 
+{/* Change #1 -Right here - You need to give value to this button - See notes 9   */}
         <button>Add</button>
       </form>
     </div>
