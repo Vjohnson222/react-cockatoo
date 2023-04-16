@@ -1,7 +1,14 @@
-import React, { useEffect } from "react";
-import AddTodoForm from "./AddTodoForm";
-import TodoList from "./TodoList";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import AddTodoForm from './AddTodoForm';
+import TodoList from './TodoList';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// The directions speak about a Nav Eelement 
+import Nav from './Nav'
+import './TodoListItem.module.css';
+
+// #1 Here we added the new Nav component - but there's no nav element, and hey no worries here
+// Also go back and retracefor sake of airtable away just to make this work for now
+
 
 function App() {
   const [todoList, setTodoList] = React.useState([]);
@@ -57,7 +64,12 @@ fetch(url, {
           path="/"
           element={
             <div>
-              <h1>Todo List</h1>
+<Nav />
+<h4 style={{ backgroundColor: 'grey', height: '.09in'}}></h4>
+
+<h1 style={{ backgroundColor: 'black', height: '1in', color: 'white', padding: '1.5rem' }}>Todo List</h1>
+<h5 style={{ backgroundColor: 'red', height: '.02in', color: 'white', padding: '.5rem' }}></h5>
+
               <AddTodoForm onAddTodo={addTodo} />
               {isLoading ? (
                 <p>Loading...</p>
@@ -67,7 +79,7 @@ fetch(url, {
             </div>
           }
         ></Route>
-        <Route path="/new" element={<h1>New Todo List</h1>}></Route>
+        <Route path="/new" element={<h1> Todo List</h1>}></Route>
       </Routes>
     </BrowserRouter>
   );
