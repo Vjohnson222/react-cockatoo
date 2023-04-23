@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
+import PropTypes from 'prop-types';
 
 
 // Passed todoList state as a prop named todoList to the TodoList component 
@@ -8,6 +9,13 @@ import TodoListItem from './TodoListItem';
 //Next - update props to use destructuring
 
 const TodoList = ({ todoList, onRemoveTodo }) => {
+
+		// Right Here 
+
+		// TodoList.propTypes = {
+		// 	onAddTodo: PropTypes.func,
+		//   };
+
 	return (
 		<div>
 			<ul>
@@ -18,5 +26,8 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
 		</div>
 	);
 };
-
+TodoList.prototype = {
+	onRemoveTodo: PropTypes.func,
+	todoList: PropTypes.array,
+};
 export default TodoList;

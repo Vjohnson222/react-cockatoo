@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 // 1.	Declare and export a new functional React component named InputWithLabel 
 
@@ -17,6 +19,13 @@ const InputWithLabel = ({
 		
 		inputRef.current.focus();
 	}, []);
+
+	// Right Here 
+
+// 	InputWithLabel.propTypes = {
+// 	onAddTodo: PropTypes.func,
+//   };
+
 	return (
 		<>
 		{/* Update todoTitle and handleTitleChange references to come from props */}
@@ -34,6 +43,13 @@ const InputWithLabel = ({
 			/>
 		</>
 	);
+};
+
+InputWithLabel.prototype = {
+	handleTitleChange: PropTypes.func,
+	todoTitle: PropTypes.string,
+	isFocused: PropTypes.bool,
+	children: PropTypes.string,
 };
 
 export default InputWithLabel;

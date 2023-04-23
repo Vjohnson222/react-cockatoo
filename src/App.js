@@ -48,15 +48,20 @@ fetch(url, {
     }
   }, [todoList, isLoading]);
 
+  // const addTodo = (newTodo) => {
+  //   setTodoList([...todoList, newTodo]);
+  // };
   const addTodo = (newTodo) => {
-    setTodoList([...todoList, newTodo]);
+    setTodoList(
+      Array.isArray(todoList) ? [...todoList, newTodo] : [newTodo]
+    );
   };
-
   const removeTodo = (id) => {
     const removeNewToDo = todoList.filter((list) => list.id !== id);
     setTodoList(removeNewToDo);
   };
-
+ 
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -65,10 +70,9 @@ fetch(url, {
           element={
             <div>
 <Nav />
-<h4 style={{ backgroundColor: 'grey', height: '.09in'}}></h4>
-
+<h4 style={{ backgroundColor: 'grey', color: 'transparent', height: '.09in'}}>H</h4>
 <h1 style={{ backgroundColor: 'black', height: '1in', color: 'white', padding: '1.5rem' }}>Todo List</h1>
-<h5 style={{ backgroundColor: 'red', height: '.02in', color: 'white', padding: '.5rem' }}></h5>
+<h5 style={{ backgroundColor: 'red', height: '.02in', color: 'transparent',  padding: '.5rem' }}>H</h5>
 
               <AddTodoForm onAddTodo={addTodo} />
               {isLoading ? (

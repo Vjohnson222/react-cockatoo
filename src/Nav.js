@@ -1,5 +1,6 @@
 // #4 This is our new Nav component
 import './TodoListItem.module.css';
+import React from 'react';
 
 const Nav = () => {
 	return (
